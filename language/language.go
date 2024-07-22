@@ -15,14 +15,35 @@ type cSharp struct {
 	config.Configurer
 }
 
+// CSharp rules constants
+const (
+	RuleBinary  = "csharp_binary"
+	RuleLibrary = "csharp_library"
+	RuleTest    = "csharp_test"
+
+	attributeName = "name"
+	attributeDeps = "deps"
+	attributeSrcs = "srcs"
+)
+
+var usedCSharpRules = []string{
+	RuleBinary,
+	RuleLibrary,
+	RuleTest,
+}
+
 // Loads implements language.Language.
 func (c cSharp) Loads() []rule.LoadInfo {
-	panic("unimplemented")
+	return []rule.LoadInfo{
+		{
+			Name:    "@rules_dotnet//dotnet:defs.bzl",
+			Symbols: usedCSharpRules,
+		},
+	}
 }
 
 // Fix implements language.Language.
 func (cSharp) Fix(c *config.Config, f *rule.File) {
-	panic("unimplemented")
 }
 
 // GenerateRules implements language.Language.
@@ -32,7 +53,35 @@ func (c cSharp) GenerateRules(args language.GenerateArgs) language.GenerateResul
 
 // Kinds implements language.Language.
 func (c cSharp) Kinds() map[string]rule.KindInfo {
-	panic("unimplemented")
+	return map[string]rule.KindInfo{
+		RuleBinary: {
+			MatchAny:   true,
+			MatchAttrs: []string{attributeName},
+			NonEmptyAttrs: map[string]bool{
+				attributeName: true,
+				attributeDeps: true,
+				attributeSrcs: true,
+			},
+		},
+		RuleLibrary: {
+			MatchAny:   true,
+			MatchAttrs: []string{attributeName},
+			NonEmptyAttrs: map[string]bool{
+				attributeName: true,
+				attributeDeps: true,
+				attributeSrcs: true,
+			},
+		},
+		RuleTest: {
+			MatchAny:   true,
+			MatchAttrs: []string{attributeName},
+			NonEmptyAttrs: map[string]bool{
+				attributeName: true,
+				attributeDeps: true,
+				attributeSrcs: true,
+			},
+		},
+	}
 }
 
 // CSharp returns the C# language for gazelle.
