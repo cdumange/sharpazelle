@@ -35,7 +35,7 @@ func (cSharpResolver) Resolve(c *config.Config, ix *resolve.RuleIndex, rc *repo.
 	panic("unimplemented")
 }
 
-// NewResolver returns the Resolver for csharp language
+// NewResolver returns the Resolver for csharp language.
 func NewResolver() resolve.Resolver {
 	return cSharpResolver{}
 }
