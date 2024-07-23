@@ -1,5 +1,6 @@
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 
+# ------ gazelle stuff
 http_archive(
     name = "io_bazel_rules_go",
     integrity = "sha256-M6zErg9wUC20uJPJ/B3Xqb+ZjCPn/yxFF3QdQEmpdvg=",
@@ -30,4 +31,29 @@ go_register_toolchains(
 )
 
 gazelle_dependencies()
+
+
+# ----- csharp rules stuff
+
+http_archive(
+    name = "rules_dotnet",
+    integrity = "sha256-KUH7wrIVcXczJjB1Mq7vA2ZqhDKURxlT4O3MJVbGwUg=",
+    urls = [
+        "https://github.com/bazelbuild/rules_dotnet/releases/download/v0.15.1/rules_dotnet-v0.15.1.tar.gz",
+    ],
+)
+
+load(
+    "@rules_dotnet//dotnet:repositories.bzl",
+    "dotnet_register_toolchains",
+)
+
+dotnet_register_toolchains("dotnet", "8.0.100")
+
+local_repository(
+    name = "sharpazelle",
+    path = "./",
+)
+
+
 

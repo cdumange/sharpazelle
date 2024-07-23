@@ -1,13 +1,10 @@
-package language
+package resolver
 
 import (
 	"github.com/bazelbuild/bazel-gazelle/config"
 	"github.com/bazelbuild/bazel-gazelle/language"
 	"github.com/bazelbuild/bazel-gazelle/resolve"
 	"github.com/bazelbuild/bazel-gazelle/rule"
-
-	cfg "github.com/cdumange/sharpazelle/config"
-	"github.com/cdumange/sharpazelle/resolver"
 )
 
 type cSharp struct {
@@ -48,7 +45,8 @@ func (cSharp) Fix(c *config.Config, f *rule.File) {
 
 // GenerateRules implements language.Language.
 func (c cSharp) GenerateRules(args language.GenerateArgs) language.GenerateResult {
-	panic("unimplemented")
+	// TODO
+	return language.GenerateResult{}
 }
 
 // Kinds implements language.Language.
@@ -85,9 +83,9 @@ func (c cSharp) Kinds() map[string]rule.KindInfo {
 }
 
 // CSharp returns the C# language for gazelle.
-func CSharp() language.Language {
+func NewLanguage() language.Language {
 	return cSharp{
-		Resolver:   resolver.NewResolver(),
-		Configurer: cfg.NewConfigurer(),
+		Resolver:   NewResolver(),
+		Configurer: NewConfigurer(),
 	}
 }

@@ -1,0 +1,5 @@
+bazel_dep(name = "rules_dotnet", version = "0.15.1")
+
+dotnet = use_extension("@rules_dotnet//dotnet:extensions.bzl", "dotnet")
+dotnet.toolchain(dotnet_version = "8.0.100")
+use_repo(dotnet, "dotnet_toolchains")
