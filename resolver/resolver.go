@@ -9,7 +9,7 @@ import (
 )
 
 const (
-	language = "csharp"
+	cSharpLanguage = "csharp"
 )
 
 type cSharpResolver struct {
@@ -27,7 +27,7 @@ func (cSharpResolver) Imports(c *config.Config, r *rule.Rule, f *rule.File) []re
 
 // Name implements resolve.Resolver.
 func (c cSharpResolver) Name() string {
-	return language
+	return cSharpLanguage
 }
 
 // Resolve implements resolve.Resolver.
