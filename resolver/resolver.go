@@ -32,7 +32,6 @@ func (c cSharpResolver) Name() string {
 
 // Resolve implements resolve.Resolver.
 func (cSharpResolver) Resolve(c *config.Config, ix *resolve.RuleIndex, rc *repo.RemoteCache, r *rule.Rule, imports interface{}, from label.Label) {
-
 }
 
 // NewResolver returns the Resolver for csharp language.
