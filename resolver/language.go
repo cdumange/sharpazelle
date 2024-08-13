@@ -1,6 +1,8 @@
 package resolver
 
 import (
+	"fmt"
+
 	"github.com/bazelbuild/bazel-gazelle/config"
 	"github.com/bazelbuild/bazel-gazelle/language"
 	"github.com/bazelbuild/bazel-gazelle/resolve"
@@ -44,9 +46,13 @@ func (cSharp) Fix(c *config.Config, f *rule.File) {
 }
 
 // GenerateRules implements language.Language.
-func (c cSharp) GenerateRules(args language.GenerateArgs) language.GenerateResult {
-	// TODO
-	return language.GenerateResult{}
+func (c cSharp) GenerateRules(args language.GenerateArgs) (res language.GenerateResult) {
+	if !isTreatableFolder(args.Dir) {
+		return language.GenerateResult{}
+	}
+
+	fmt.Println(string(args.Dir))
+	return
 }
 
 // Kinds implements language.Language.
@@ -82,7 +88,7 @@ func (c cSharp) Kinds() map[string]rule.KindInfo {
 	}
 }
 
-// CSharp returns the C# language for gazelle.
+// NewLanguage returns the C# language implementation for gazelle.
 func NewLanguage() language.Language {
 	return cSharp{
 		Resolver:   NewResolver(),

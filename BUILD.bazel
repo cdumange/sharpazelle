@@ -9,6 +9,7 @@ go_library(
         "resolver/configurer.go",
         "resolver/language.go",
         "resolver/resolver.go",
+        "resolver/utils.go",
     ],
     importpath = "github.com/cdumange/sharpazelle",
     visibility = ["//visibility:public"],
