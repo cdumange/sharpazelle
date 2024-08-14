@@ -1,0 +1,12 @@
+name: Test language
+on:
+  push:
+    paths:
+      - 'resolver/*'
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: bazelbuild/setup-bazelisk@v3
+      - run: bazel test resolver/...
