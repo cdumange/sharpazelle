@@ -1,0 +1,7 @@
+load("@bazel_gazelle//:def.bzl", "gazelle")
+
+# gazelle:exclude examples
+gazelle(
+    name = "gazelle",
+    gazelle = "@sharpazelle//resolver:gazelle_csharp",
+)
