@@ -1,6 +1,7 @@
-package resolver
+package utils
 
 import (
+	"errors"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -14,7 +15,28 @@ func Test_isTreatableFolder(t *testing.T) {
 		"/home/cdumange/code/zenika/sharpazelle/tests/simple/webapp/bin":               false,
 	} {
 		t.Run(folder, func(t *testing.T) {
-			assert.Equal(t, should, isTreatableFolder(folder))
+			assert.Equal(t, should, IsTreatableFolder(folder))
 		})
 	}
+}
+
+func TestMust(t *testing.T) {
+	testValue := "test"
+	f := func(err error) (string, error) {
+		return testValue, err
+	}
+
+	t.Run("ok", func(t *testing.T) {
+		assert.NotPanics(t, func() {
+			v := Must[string](f(nil))
+			assert.Equal(t, testValue, v)
+		})
+	})
+
+	t.Run("ko", func(t *testing.T) {
+		assert.Panics(t, func() {
+			v := Must[string](f(errors.New("an error")))
+			assert.Equal(t, testValue, v)
+		})
+	})
 }

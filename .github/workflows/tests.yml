@@ -1,12 +1,23 @@
 name: Test language
-on:
-  push:
-    paths:
-      - 'resolver/*'
+on: [push]
 jobs:
   tests:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - uses: bazelbuild/setup-bazelisk@v3
-      - run: bazel test resolver/...
+      - run: bazel test ...
+  gazelle:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: bazelbuild/setup-bazelisk@v3
+      - run: bazel run //:gazelle
+  sharpazelle:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: bazelbuild/setup-bazelisk@v3
+      - name: run
+        working-directory: ./tests
+        run: bazel run //:gazelle
