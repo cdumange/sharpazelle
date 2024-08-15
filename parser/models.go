@@ -11,7 +11,8 @@ type Project struct {
 	ProjectSDK      string
 	TargetFramework string
 
-	References []string
+	References   []string
+	Dependencies []string
 }
 
 type csproj struct {
@@ -29,6 +30,7 @@ type csprojProperty struct {
 type csprojReferences struct {
 	XMLName xml.Name           `xml:"ItemGroup"`
 	Refs    []projectReference `xml:"ProjectReference"`
+	Deps    []projectReference `xml:"PackageReference"`
 }
 
 type projectReference struct {

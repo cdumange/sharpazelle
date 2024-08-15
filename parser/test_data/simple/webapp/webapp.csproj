@@ -4,6 +4,11 @@
     <ProjectReference Include="..\lib\lib.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="JOS.Result" Version="1.1.7" />
+    <PackageReference Include="NSubstitute" Version="5.1.0" />
+  </ItemGroup>
+
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
     <Nullable>enable</Nullable>

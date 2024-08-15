@@ -28,9 +28,15 @@ func ParseProject(csprojPath string) (Project, error) {
 		ref = append(ref, v.Ref)
 	}
 
+	var deps []string
+	for _, v := range file.References.Deps {
+		ref = append(ref, v.Ref)
+	}
+
 	return Project{
 		ProjectSDK:      file.SDK,
 		TargetFramework: file.PropertyGroup.TargetFramework,
 		References:      ref,
+		Dependencies:    deps,
 	}, nil
 }
