@@ -9,16 +9,28 @@ type Folder struct {
 
 type Project struct {
 	ProjectSDK      string
-	TargetFramework string `xml:"TargetFramework"`
+	TargetFramework string
+
+	References []string
 }
 
 type csproj struct {
 	XMLName       xml.Name `xml:"Project"`
 	SDK           string   `xml:"Sdk,attr"`
 	PropertyGroup csprojProperty
+	References    csprojReferences
 }
 
 type csprojProperty struct {
 	XMLName         xml.Name `xml:"PropertyGroup"`
 	TargetFramework string   `xml:"TargetFramework"`
+}
+
+type csprojReferences struct {
+	XMLName xml.Name           `xml:"ItemGroup"`
+	Refs    []projectReference `xml:"ProjectReference"`
+}
+
+type projectReference struct {
+	Ref string `xml:"Include,attr"`
 }

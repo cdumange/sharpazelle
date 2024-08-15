@@ -23,8 +23,14 @@ func ParseProject(csprojPath string) (Project, error) {
 		return Project{}, fmt.Errorf("error while parsing xml: %w", err)
 	}
 
+	var ref []string
+	for _, v := range file.References.Refs {
+		ref = append(ref, v.Ref)
+	}
+
 	return Project{
 		ProjectSDK:      file.SDK,
 		TargetFramework: file.PropertyGroup.TargetFramework,
+		References:      ref,
 	}, nil
 }

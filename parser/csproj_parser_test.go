@@ -14,6 +14,7 @@ func Test_ParseProject(t *testing.T) {
 
 		assert.Equal(t, "Microsoft.NET.Sdk.Web", p.ProjectSDK)
 		assert.Equal(t, "net8.0", p.TargetFramework)
+		assert.Contains(t, p.References, "..\\lib\\lib.csproj")
 	})
 
 	t.Run("not a csproj", func(t *testing.T) {
