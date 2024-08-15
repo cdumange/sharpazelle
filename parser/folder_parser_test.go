@@ -16,7 +16,7 @@ func Test_parserFolder(t *testing.T) {
 		folder   []os.DirEntry
 		expected Folder
 	}{
-		"../tests/simple": {
+		"./test_data/simple": {
 			folder: []os.DirEntry{},
 			expected: Folder{
 				Folders: []string{"Tests", "lib", "webapp"},

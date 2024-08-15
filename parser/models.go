@@ -8,13 +8,17 @@ type Folder struct {
 }
 
 type Project struct {
-	Target string
+	ProjectSDK      string
+	TargetFramework string `xml:"TargetFramework"`
 }
 
 type csproj struct {
-	XMLName xml.Name `xml:"Project"`
-	SDK     string   `xml:"Sdk,attr"`
+	XMLName       xml.Name `xml:"Project"`
+	SDK           string   `xml:"Sdk,attr"`
+	PropertyGroup csprojProperty
 }
 
 type csprojProperty struct {
+	XMLName         xml.Name `xml:"PropertyGroup"`
+	TargetFramework string   `xml:"TargetFramework"`
 }

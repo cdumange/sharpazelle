@@ -11,15 +11,22 @@ go_library(
     visibility = ["//visibility:public"],
 )
 
+filegroup(
+    name = "tests_files",
+    srcs = glob(["test_data/**"]),
+)
+
 go_test(
     name = "parser_test",
     srcs = [
         "csproj_parser_test.go",
         "folder_parser_test.go",
     ],
+    data = ["tests_files"],
     embed = [":parser"],
     deps = [
         "//utils",
         "@com_github_stretchr_testify//assert",
+        "@com_github_stretchr_testify//require",
     ],
 )

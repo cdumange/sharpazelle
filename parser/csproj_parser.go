@@ -24,6 +24,7 @@ func ParseProject(csprojPath string) (Project, error) {
 	}
 
 	return Project{
-		Target: file.SDK,
+		ProjectSDK:      file.SDK,
+		TargetFramework: file.PropertyGroup.TargetFramework,
 	}, nil
 }
