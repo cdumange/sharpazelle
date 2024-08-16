@@ -24,23 +24,6 @@ func (c cSharpResolver) Embeds(r *rule.Rule, from label.Label) []label.Label {
 func (s cSharpResolver) Imports(c *config.Config, r *rule.Rule, f *rule.File) []resolve.ImportSpec {
 	var specs []resolve.ImportSpec
 
-	switch r.Kind() {
-	case RuleBinary:
-		specs = append(specs, resolve.ImportSpec{
-			Lang: s.Name(),
-			Imp:  r.Name(),
-		})
-	case RuleLibrary:
-		specs = append(specs, resolve.ImportSpec{
-			Lang: s.Name(),
-			Imp:  r.Name(),
-		})
-	case RuleTest:
-		specs = append(specs, resolve.ImportSpec{
-			Lang: s.Name(),
-			Imp:  r.Name(),
-		})
-	}
 	return specs
 }
 

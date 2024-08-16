@@ -1,3 +1,13 @@
 load("@rules_dotnet//dotnet:defs.bzl", "csharp_test")
 
-csharp_test(name = "/home/cdumange/code/zenika/sharpazelle/tests/simple/Tests")
+csharp_test(
+    name = "Tests",
+    srcs = glob(
+        ["./**"],
+        exclude = [
+            "./bin/**",
+            "./obj/**",
+        ],
+    ),
+    target_frameworks = "net8.0",
+)
