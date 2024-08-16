@@ -1,0 +1,3 @@
+load("@rules_dotnet//dotnet:defs.bzl", "csharp_test")
+
+csharp_test(name = "/home/cdumange/code/zenika/sharpazelle/tests/simple/Tests")

@@ -36,6 +36,7 @@ func ParseProject(csprojPath string) (Project, error) {
 	return Project{
 		ProjectSDK:      file.SDK,
 		TargetFramework: file.PropertyGroup.TargetFramework,
+		IsTestProject:   file.PropertyGroup.IsTestProject,
 		References:      ref,
 		Dependencies:    deps,
 	}, nil

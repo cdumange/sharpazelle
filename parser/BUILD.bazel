@@ -9,11 +9,16 @@ go_library(
     ],
     importpath = "github.com/cdumange/sharpazelle/parser",
     visibility = ["//visibility:public"],
+    deps = [
+        "//commonerrors",
+        "//utils",
+    ],
 )
 
 filegroup(
     name = "tests_files",
     srcs = glob(["test_data/**"]),
+    visibility = ["//visibility:public"],
 )
 
 go_test(
@@ -25,7 +30,7 @@ go_test(
     data = ["tests_files"],
     embed = [":parser"],
     deps = [
-        "//utils",
+        "//commonerrors",
         "@com_github_stretchr_testify//assert",
         "@com_github_stretchr_testify//require",
     ],
