@@ -1,3 +1,21 @@
 load("@rules_dotnet//dotnet:defs.bzl", "csharp_binary")
 
-csharp_binary(name = "/home/cdumange/code/zenika/sharpazelle/tests/simple/webapp")
+csharp_binary(
+    name = "webapp",
+    srcs = glob(
+        [
+            "*.cs",
+            "Pages/*.cs",
+            "Pages/**/*.cs",
+            "Properties/*.cs",
+            "Properties/**/*.cs",
+        ],
+        exclude = [
+            "**/*.cshtml.cs",
+            "bin/**",
+            "obj/**",
+        ],
+    ),
+    project_sdk = "web",
+    target_frameworks = ["net8.0"],
+)

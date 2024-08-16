@@ -5,6 +5,7 @@ import (
 	"errors"
 	"fmt"
 	"log/slog"
+	"strings"
 
 	"github.com/bazelbuild/bazel-gazelle/config"
 	"github.com/bazelbuild/bazel-gazelle/language"
@@ -28,9 +29,11 @@ const (
 	RuleLibrary = "csharp_library"
 	RuleTest    = "csharp_test"
 
-	attributeName = "name"
-	attributeDeps = "deps"
-	attributeSrcs = "srcs"
+	attributeName      = "name"
+	attributeDeps      = "deps"
+	attributeSrcs      = "srcs"
+	attributeFramework = "target_frameworks"
+	attributeSDK       = "project_sdk"
 
 	sdkBase = "Microsoft.NET.Sdk"
 )
@@ -78,8 +81,28 @@ func (c cSharp) GenerateRules(args language.GenerateArgs) (res language.Generate
 		return
 	}
 
-	t := ruleFromSDK(project)
-	res.Gen = append(res.Gen, rule.NewRule(t, args.Dir))
+	sFolder := strings.Split(args.Dir, "/")
+
+	ruleType := ruleFromSDK(project)
+	r := rule.NewRule(ruleType, sFolder[len(sFolder)-1])
+
+	var srcs rule.GlobValue
+
+	srcs.Patterns = append(srcs.Patterns, "*.cs")
+	for _, folder := range project.Folders {
+		srcs.Patterns = append(srcs.Patterns, fmt.Sprintf("%s/**/*.cs", folder), fmt.Sprintf("%s/*.cs", folder))
+	}
+	srcs.Excludes = append(srcs.Excludes, "bin/**", "obj/**", "**/*.cshtml.cs")
+	r.SetAttr("srcs", srcs)
+
+	r.SetAttr(attributeFramework, []string{project.Project.TargetFramework})
+
+	if !project.Project.IsTestProject && project.Project.ProjectSDK != sdkBase {
+		sdk := strings.Split(project.Project.ProjectSDK, ".")
+		r.SetAttr(attributeSDK, strings.ToLower(sdk[len(sdk)-1]))
+	}
+
+	res.Gen = append(res.Gen, r)
 
 	res.Imports = append(res.Imports, "./**")
 
@@ -109,6 +132,12 @@ func (c cSharp) Kinds() map[string]rule.KindInfo {
 				attributeDeps: true,
 				attributeSrcs: true,
 			},
+			MergeableAttrs: map[string]bool{
+				attributeSrcs: true,
+			},
+			ResolveAttrs: map[string]bool{
+				attributeSrcs: true,
+			},
 		},
 		RuleLibrary: {
 			MatchAny:   true,
@@ -118,6 +147,12 @@ func (c cSharp) Kinds() map[string]rule.KindInfo {
 				attributeDeps: true,
 				attributeSrcs: true,
 			},
+			MergeableAttrs: map[string]bool{
+				attributeSrcs: true,
+			},
+			ResolveAttrs: map[string]bool{
+				attributeSrcs: true,
+			},
 		},
 		RuleTest: {
 			MatchAny:   true,
@@ -125,6 +160,12 @@ func (c cSharp) Kinds() map[string]rule.KindInfo {
 			NonEmptyAttrs: map[string]bool{
 				attributeName: true,
 				attributeDeps: true,
+				attributeSrcs: true,
+			},
+			MergeableAttrs: map[string]bool{
+				attributeSrcs: true,
+			},
+			ResolveAttrs: map[string]bool{
 				attributeSrcs: true,
 			},
 		},
