@@ -1,5 +1,5 @@
 load("@bazel_gazelle//:def.bzl", "gazelle_binary")
-load("@io_bazel_rules_go//go:def.bzl", "go_library")
+load("@io_bazel_rules_go//go:def.bzl", "go_library", "go_test")
 
 go_library(
     name = "resolver",
@@ -11,6 +11,7 @@ go_library(
     importpath = "github.com/cdumange/sharpazelle/resolver",
     visibility = ["//visibility:public"],
     deps = [
+        "//commonerrors",
         "//parser",
         "//utils",
         "@bazel_gazelle//config:go_default_library",
@@ -26,4 +27,16 @@ gazelle_binary(
     name = "gazelle_csharp",
     languages = ["resolver"],
     visibility = ["//visibility:public"],
+)
+
+go_test(
+    name = "resolver_test",
+    srcs = ["language_test.go"],
+    data = ["//parser:tests_files"],
+    embed = [":resolver"],
+    deps = [
+        "@bazel_gazelle//language:go_default_library",
+        "@bazel_gazelle//rule:go_default_library",
+        "@com_github_stretchr_testify//assert",
+    ],
 )
