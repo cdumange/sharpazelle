@@ -11,11 +11,20 @@ csharp_binary(
             "Properties/**/*.cs",
         ],
         exclude = [
-            "**/*.cshtml.cs",
             "bin/**",
             "obj/**",
         ],
     ),
+    additionalfiles = glob([
+        "wwwroot/**",
+        "Pages/**/*.cshtml",
+        "Pages/*.cshtml",
+    ], exclude = ["**/*.txt", "**/*.md"]),
+    resources = glob([
+        "wwwroot/**",
+        "Pages/**/*.cshtml",
+        "Pages/*.cshtml",
+    ], exclude = ["**/*.txt", "**/*.md"]),
     project_sdk = "web",
     target_frameworks = ["net8.0"],
 )
